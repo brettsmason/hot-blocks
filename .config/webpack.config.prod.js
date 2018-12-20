@@ -1,10 +1,10 @@
 /**
  * This file defines the configuration that is used for the production build.
  */
-const { join } = require( 'path' );
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { join } = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ExtraneousFileCleanupPlugin = require('webpack-extraneous-file-cleanup-plugin');
-const externals = require( './externals' );
+const externals = require('./externals');
 
 /**
  * Theme production build configuration.
@@ -21,7 +21,7 @@ module.exports = {
 		errors: true,
 		performance: true,
 		timings: true,
-		warnings: true,
+		warnings: true
 	},
 
 	// Permit importing @wordpress/* packages.
@@ -32,31 +32,31 @@ module.exports = {
 		minimize: true,
 		noEmitOnErrors: true,
 		splitChunks: {
-      cacheGroups: {
-        style: {
-          name: 'style',
-          test: /style\.scss$/,
-          chunks: 'initial',
-          enforce: true
+			cacheGroups: {
+				style: {
+					name: 'style',
+					test: /style\.scss$/,
+					chunks: 'all',
+					enforce: false
 				},
 				editor: {
-          name: 'editor',
-          test: /editor\.scss$/,
-          chunks: 'initial',
-          enforce: true
-        }
-      }
-    }
+					name: 'editor',
+					test: /editor\.scss$/,
+					chunks: 'all',
+					enforce: false
+				}
+			}
+		}
 	},
 
 	// Specify where the code comes from.
 	entry: {
-		editor: join( process.cwd(), 'src', 'index.js' ),
+		editor: join(process.cwd(), 'src', 'index.js')
 	},
 	output: {
 		pathinfo: false,
-		path: join( process.cwd(), 'build' ),
-		filename: '[name].js',
+		path: join(process.cwd(), 'build'),
+		filename: '[name].js'
 	},
 
 	module: {
@@ -65,25 +65,25 @@ module.exports = {
 			{
 				// Process JS with Babel.
 				test: /\.js$/,
-				include: [ join( process.cwd(), 'src' ) ],
-				loader: require.resolve( 'babel-loader' ),
+				include: [join(process.cwd(), 'src')],
+				loader: require.resolve('babel-loader')
 			},
 			{
-        test: /\.scss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-					"css-loader",
-					"sass-loader"
-        ]
-      }
-		],
+				test: /\.scss$/,
+				use: [
+					{
+						loader: MiniCssExtractPlugin.loader
+					},
+					'css-loader',
+					'sass-loader'
+				]
+			}
+		]
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[name].css'
+			filename: '[name].css',
+			chunkFilename: '[name].css'
 		}),
 
 		// Remove empty JS files for CSS files.
