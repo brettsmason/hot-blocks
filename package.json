@@ -10,9 +10,9 @@
   "author": "Brett Mason",
   "license": "GPL-2.0-or-later",
   "scripts": {
-    "build": "webpack --config=.config/webpack.config.prod.js",
     "start": "webpack-dev-server --config .config/webpack.config.dev.js",
-    "lint:js": "eslint './src/**/*.js' --fix"
+    "build": "webpack --config=.config/webpack.config.prod.js",
+    "lint:js": "eslint './src/**/*.js'"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
@@ -23,14 +23,17 @@
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "css-loader": "^2.0.0",
     "eslint": "^5.10.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "extract-css-chunks-webpack-plugin": "^3.3.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "signal-exit": "^3.0.2",
     "style-loader": "^0.23.1",
-    "webpack": "^4.23.1",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14",
     "webpack-extraneous-file-cleanup-plugin": "^2.0.0",
     "webpack-manifest-plugin": "^2.0.4"
   }
