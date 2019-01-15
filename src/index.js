@@ -7,7 +7,7 @@ import { select, dispatch } from '@wordpress/data';
 /**
  * No-op function for use as a default argument value.
  *
- * @return null
+ * @return {null} Null
  */
 const noop = () => null;
 
@@ -94,5 +94,3 @@ autoload( {
 	before: storeSelectedBlock,
 	after: refreshAllBlocks,
 } );
-
-console.log( 'loaded!' );

@@ -1,25 +1,25 @@
 /**
  * This file defines the configuration for development and dev-server builds.
  */
-const { unlinkSync } = require( 'fs' );
-const { join } = require( 'path' );
-const onExit = require( 'signal-exit' );
-const webpack = require( 'webpack' );
-const ManifestPlugin = require( 'webpack-manifest-plugin' );
+const { unlinkSync } = require('fs');
+const { join } = require('path');
+const onExit = require('signal-exit');
+const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
-const externals = require( './externals' );
+const externals = require('./externals');
 
 // Clean up manifest on exit.
-onExit( () => {
+onExit(() => {
 	try {
-		unlinkSync( 'build/asset-manifest.json' );
-	} catch ( e ) {
+		unlinkSync('build/asset-manifest.json');
+	} catch (e) {
 		// Silently ignore unlinking errors: so long as the file is gone, that is good.
 	}
-} );
+});
 
-const port = parseInt( process.env.PORT, 10 ) || 3030;
-const publicPath = `http://localhost:${ port }/build/`;
+const port = parseInt(process.env.PORT, 10) || 3030;
+const publicPath = `http://localhost:${port}/build/`;
 
 /**
  * Theme development build configuration.
@@ -31,12 +31,13 @@ module.exports = {
 
 	// Allow config to override shared devServer properties.
 	devServer: {
+		disableHostCheck: true,
 		headers: {
-			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*'
 		},
 		hotOnly: true,
 		watchOptions: {
-			aggregateTimeout: 300,
+			aggregateTimeout: 300
 		},
 		stats: {
 			all: false,
@@ -45,9 +46,9 @@ module.exports = {
 			errors: true,
 			performance: true,
 			timings: true,
-			warnings: true,
+			warnings: true
 		},
-		port,
+		port
 	},
 
 	// Permit importing @wordpress/* packages.
@@ -55,14 +56,14 @@ module.exports = {
 
 	// Specify where the code comes from.
 	entry: {
-		editor: join( process.cwd(), 'src', 'index.js' ),
+		editor: join(process.cwd(), 'src', 'index.js')
 	},
 	output: {
 		// Add /* filename */ comments to generated require()s in the output.
 		pathinfo: false,
-		path: join( process.cwd(), 'build' ),
+		path: join(process.cwd(), 'build'),
 		filename: '[name].js',
-		publicPath,
+		publicPath
 	},
 
 	module: {
@@ -71,22 +72,18 @@ module.exports = {
 			{
 				// Process JS with Babel.
 				test: /\.js$/,
-				include: [ join( process.cwd(), 'src' ) ],
-				loader: require.resolve( 'babel-loader' ),
+				include: [join(process.cwd(), 'src')],
+				loader: require.resolve('babel-loader'),
 				options: {
 					// Cache compilation results in ./node_modules/.cache/babel-loader/
-					cacheDirectory: true,
-				},
+					cacheDirectory: true
+				}
 			},
 			{
-        test: /\.scss$/,
-        use: [
-          "style-loader",
-					"css-loader",
-					"sass-loader"
-        ]
-      },
-		],
+				test: /\.scss$/,
+				use: ['style-loader', 'css-loader', 'sass-loader']
+			}
+		]
 	},
 
 	plugins: [
@@ -95,9 +92,9 @@ module.exports = {
 		new ManifestPlugin({
 			fileName: 'asset-manifest.json',
 			writeToFileEmit: true,
-			publicPath,
-		} ),
+			publicPath
+		}),
 		// Enable HMR.
-		new webpack.HotModuleReplacementPlugin(),
-	],
+		new webpack.HotModuleReplacementPlugin()
+	]
 };

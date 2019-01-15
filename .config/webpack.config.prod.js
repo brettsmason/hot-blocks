@@ -37,14 +37,14 @@ module.exports = {
 					name: 'style',
 					test: /style\.scss$/,
 					chunks: 'all',
-					enforce: false
+					enforce: true
 				},
 				editor: {
 					name: 'editor',
 					test: /editor\.scss$/,
 					chunks: 'all',
-					enforce: false
-				}
+					enforce: true,
+				},
 			}
 		}
 	},
@@ -71,11 +71,9 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				use: [
-					{
-						loader: MiniCssExtractPlugin.loader
-					},
-					'css-loader',
-					'sass-loader'
+					{ loader: MiniCssExtractPlugin.loader },
+					{ loader: 'css-loader', options: { importLoaders: 2 } },
+                    { loader: 'sass-loader' },
 				]
 			}
 		]
