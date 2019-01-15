@@ -4,7 +4,7 @@
  *
  * @author    Brett Mason
  * @license   GPL-2.0+
- * @copyright 2018 Brett Mason
+ * @copyright 2019 Brett Mason
  *
  * @wordpress-plugin
  * Plugin Name: Hot Blocks
