@@ -55,23 +55,19 @@ function enqueue_block_editor_assets() {
 	}
 }
 
+/**
+ * Enqueue front end assets based on the generated `asset-manifest.json` file.
+ */
 function block_assets() {
 	$plugin_path  = trailingslashit( plugin_dir_path( dirname( __FILE__ ) ) );
 	$plugin_url   = trailingslashit( plugin_dir_url( dirname( __FILE__ ) ) );
 	$dev_manifest = $plugin_path . 'build/asset-manifest.json';
 
-	$opts = [
-		'handle' => 'hot-blocks-style',
-		'scripts' => [
-			'wp-blocks',
-		],
-	];
-
 	$loaded_dev_assets = Asset_Loader\enqueue_assets( $dev_manifest, $opts );
 
 	if ( file_exists( $plugin_path . 'build/style.css' ) ) {
 		wp_enqueue_style(
-			$opts['handle'],
+			'hot-blocks-style',
 			$plugin_url . 'build/style.css',
 			null,
 			filemtime( $plugin_path . 'build/style.css' )
