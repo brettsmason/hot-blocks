@@ -12,7 +12,7 @@ const externals = require('./externals');
 // Clean up manifest on exit.
 onExit(() => {
 	try {
-		unlinkSync('build/asset-manifest.json');
+		unlinkSync('assets/dist/asset-manifest.json');
 	} catch (e) {
 		// Silently ignore unlinking errors: so long as the file is gone, that is good.
 	}
@@ -56,12 +56,12 @@ module.exports = {
 
 	// Specify where the code comes from.
 	entry: {
-		editor: join(process.cwd(), 'src', 'index.js')
+		editor: join(process.cwd(), 'assets/src', 'index.js')
 	},
 	output: {
 		// Add /* filename */ comments to generated require()s in the output.
 		pathinfo: false,
-		path: join(process.cwd(), 'build'),
+		path: join(process.cwd(), 'assets/dist'),
 		filename: '[name].js',
 		publicPath
 	},
@@ -72,7 +72,7 @@ module.exports = {
 			{
 				// Process JS with Babel.
 				test: /\.js$/,
-				include: [join(process.cwd(), 'src')],
+				include: [join(process.cwd(), 'assets/src')],
 				loader: require.resolve('babel-loader'),
 				options: {
 					// Cache compilation results in ./node_modules/.cache/babel-loader/

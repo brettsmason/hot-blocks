@@ -2,9 +2,12 @@
  * This file defines the configuration that is used for the production build.
  */
 const { join } = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ExtraneousFileCleanupPlugin = require('webpack-extraneous-file-cleanup-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const externals = require('./externals');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const editorStyles = new ExtractTextPlugin('editor.css');
+const frontendStyles = new ExtractTextPlugin('style.css');
 
 /**
  * Theme production build configuration.
@@ -31,63 +34,48 @@ module.exports = {
 	optimization: {
 		minimize: true,
 		noEmitOnErrors: true,
-		splitChunks: {
-			cacheGroups: {
-				style: {
-					name: 'style',
-					test: /style\.scss$/,
-					chunks: 'all',
-					enforce: true
-				},
-				editor: {
-					name: 'editor',
-					test: /editor\.scss$/,
-					chunks: 'all',
-					enforce: true,
-				},
-			}
-		}
 	},
 
 	// Specify where the code comes from.
 	entry: {
-		editor: join(process.cwd(), 'src', 'index.js')
+		editor: join(process.cwd(), 'assets/src', 'index.js')
 	},
 	output: {
 		pathinfo: false,
-		path: join(process.cwd(), 'build'),
+		path: join(process.cwd(), 'assets/dist'),
 		filename: '[name].js'
 	},
 
 	module: {
-		strictExportPresence: true,
 		rules: [
 			{
 				// Process JS with Babel.
 				test: /\.js$/,
-				include: [join(process.cwd(), 'src')],
+				include: [join(process.cwd(), 'assets/src')],
 				loader: require.resolve('babel-loader')
 			},
 			{
-				test: /\.scss$/,
-				use: [
-					{ loader: MiniCssExtractPlugin.loader },
-					{ loader: 'css-loader', options: { importLoaders: 2 } },
+				test: /editor\.scss$/,
+				use: editorStyles.extract([
+					{ loader: 'css-loader' },
                     { loader: 'sass-loader' },
-				]
+				])
+			},
+			{
+				test: /style\.scss$/,
+				use: frontendStyles.extract([
+					{ loader: 'css-loader' },
+                    { loader: 'sass-loader' },
+				])
 			}
 		]
 	},
 	plugins: [
-		new MiniCssExtractPlugin({
-			filename: '[name].css',
-			chunkFilename: '[name].css'
-		}),
-
-		// Remove empty JS files for CSS files.
-		// Should be fixed in Webpack 5.
-		new ExtraneousFileCleanupPlugin({
-			extensions: ['.js']
-		})
+		// Generate editor stylesheet.
+		editorStyles,
+		// Generate front end stylesheet.
+		frontendStyles,
+		// Optimise CSS astylesheets.
+		new OptimizeCssAssetsPlugin()
 	]
 };

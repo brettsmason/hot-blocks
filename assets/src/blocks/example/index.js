@@ -1,5 +1,5 @@
-import './editor.scss';
-import './style.scss';
+import './styles/editor.scss';
+import './styles/style.scss';
 
 export const name = 'hot-blocks/example';
 
@@ -21,7 +21,7 @@ export const options = {
 	save() {
 		return (
 			<div>
-				<h2>Example block - frontend</h2>
+				<h2>Example block - front end</h2>
 			</div>
 		);
 	},
