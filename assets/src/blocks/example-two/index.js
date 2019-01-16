@@ -1,13 +1,20 @@
+// Block styles.
 import './styles/editor.scss';
 import './styles/style.scss';
 
+// Editor components/external dependencies.
+import { __ } from '@wordpress/i18n';
+
 export const name = 'hot-blocks/example-two';
 
-export const options = {
-	title: 'Hot Blocks - Example Two',
-	description: 'A second simple example block.',
+export const settings = {
+	title: __( 'Hot Blocks - Example Two', 'hot-blocks' ),
+	description: __( 'A second simple example block.', 'hot-blocks' ),
 	icon: 'admin-links',
 	category: 'widgets',
+	keywords: [
+		__( 'Example block two', 'hot-blocks' ),
+	],
 
 	edit( props ) {
 		const { className } = props;

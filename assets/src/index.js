@@ -89,7 +89,7 @@ const refreshAllBlocks = () => {
 // Load all block index files.
 autoload( {
 	getContext: () => require.context( './blocks', true, /index\.js$/ ),
-	register: ( { name, options } ) => registerBlockType( name, options ),
+	register: ( { name, settings } ) => registerBlockType( name, settings ),
 	unregister: ( { name } ) => unregisterBlockType( name ),
 	before: storeSelectedBlock,
 	after: refreshAllBlocks,
