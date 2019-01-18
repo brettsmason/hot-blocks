@@ -23,9 +23,12 @@ const camelCaseDash = string => string.replace(
 const externals = [
 	'blocks',
 	'components',
+	'compose',
 	'data',
+	'editor',
 	'element',
 	'i18n',
+	'plugins',
 ].reduce( ( externals, name ) => ( {
 	...externals,
 	[ `@wordpress/${ name }` ]: `wp.${ camelCaseDash( name ) }`,
