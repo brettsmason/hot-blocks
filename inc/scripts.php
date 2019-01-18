@@ -59,7 +59,7 @@ function enqueue_block_editor_assets() {
 			);
 
 			// Sets translated strings.
-			wp_set_script_translations( $options['handle'], 'hot-blocks' );
+			wp_set_script_translations( $opts['handle'], 'hot-blocks' );
 		}
 		// TODO: Error if file is not found.
 
